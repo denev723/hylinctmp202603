@@ -1,0 +1,121 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "sass:color";
+
+.site-footer {
+  padding: 0 rem(50);
+  &__inner {
+    max-width: rem(1800);
+    margin: 0 auto;
+    padding: rem(40) 0 rem(70);
+    border-top: 1px solid $color-gray-100;
+    position: relative;
+  }
+}
+
+.logo-lg {
+  height: rem(58);
+  margin-bottom: rem(22);
+  background-image: url(../images/sub-logo-primary.png);
+  background-size: rem(431);
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+}
+
+.site-info {
+  margin-bottom: rem(21);
+  font-family: $font-nanum-square;
+  font-size: rem(18);
+  line-height: lh(30);
+}
+
+.contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 rem(23);
+  &__item {
+    &-title {
+      color: $color-gray-350;
+    }
+  }
+}
+
+.family-site {
+  width: 100%;
+  max-width: rem(280);
+  position: absolute;
+  top: rem(40);
+  right: 0;
+  &__toggle {
+    width: 100%;
+    height: rem(60);
+    display: flex;
+    align-items: center;
+    padding: rem(10) rem(45) rem(10) rem(25);
+    border-radius: rem(14);
+    background-color: #f3f6ff;
+    background-image: url(../images/uarr-primary-12.png);
+    background-size: rem(12);
+    background-position: calc(100% - #{rem(25)}) 50%;
+    background-repeat: no-repeat;
+    font-family: $font-nanum-square;
+    font-weight: 700;
+    font-size: rem(16);
+    line-height: 1;
+    transition: background-color 0.2s ease;
+    &:hover,
+    &:focus {
+      background-color: color.scale(#f3f6ff, $lightness: -5%);
+    }
+  }
+  &__list {
+    width: 100%;
+    padding: rem(20) rem(25);
+    border-radius: rem(14);
+    background-color: #f3f6ff;
+    position: absolute;
+    bottom: calc(100% + #{rem(5)});
+    left: 0;
+    transform-origin: bottom center;
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+    &.is-active {
+      transform: scaleY(1);
+    }
+  }
+  &__link {
+    display: block;
+    padding: rem(10) 0;
+    font-family: $font-nanum-square;
+    font-weight: 700;
+    font-size: rem(16);
+    line-height: 1;
+    color: $color-gray-350;
+    transition: color 0.2s ease;
+    &:hover,
+    &:focus {
+      color: $color-black;
+    }
+  }
+}
+
+.link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(6);
+  margin-bottom: rem(34);
+}
+
+.copyright {
+  font-family: $font-nanum-square;
+  font-size: rem(16);
+  line-height: lh(26);
+  letter-spacing: -0.04em;
+  color: $color-gray-300;
+}
+
+.btn-top {
+  position: absolute;
+  bottom: rem(75);
+  right: 0;
+}

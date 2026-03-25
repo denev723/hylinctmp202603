@@ -10,10 +10,10 @@ $font-noto-sans-sc: "Noto Sans SC", "Noto Sans KR", sans-serif;
 
 $font-main: $font-nanum-gothic;
 
-$color-primary: #eb5515;
-$color-primary-hover: color.scale(#eb5515, $lightness: -20%);
-$color-secondary: #ffcc00;
-$color-secondary-hover: color.scale(#ffcc00, $lightness: -10%);
+$color-primary: #00457c;
+$color-primary-hover: color.scale(#00457c, $lightness: -20%);
+$color-secondary: #ea4800;
+$color-secondary-hover: color.scale(#ea4800, $lightness: -10%);
 $color-success: #5cb85c;
 $color-danger: #d9534f;
 $color-warning: #f0ad4e;
@@ -30,8 +30,10 @@ $color-pagination-default-hover: color.scale(#f0f0f0, $lightness: -10%);
 
 // 공통 색상 변수
 $color-gray-100: #eeeeee;
+$color-gray-150: #f0f0f0;
 $color-gray-200: #dddddd;
 $color-gray-300: #cccccc;
+$color-gray-350: #aaaaaa;
 $color-gray-400: #888888;
 $color-gray-500: #999999;
 $color-gray-900: #111111;

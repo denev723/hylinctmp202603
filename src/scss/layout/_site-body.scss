@@ -1,2 +1,7 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
+@use "sass:color";
+
+.site-body {
+  min-height: rem(500);
+}

@@ -2,34 +2,32 @@
 @use "../abstracts/mixins" as *;
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-    &::before {
-        content: url(../images/button/hamburger-hover.png) url(../images/button/youtube-round-hover.png)
-            url(../images/button/insta-round-hover.png) url(../images/button/slide-larr-19.png)
-            url(../images/button/slide-rarr-19.png);
-        position: absolute;
-        width: 0;
-        height: 0;
-        overflow: hidden;
-        visibility: hidden;
-    }
+  &::before {
+    content: url(../images/hamburger-orange.png);
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+  }
 }
 
 img {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 button {
-    padding: 0;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 #wrap {
-    overflow: hidden;
-    position: relative;
+  overflow: hidden;
+  position: relative;
 }

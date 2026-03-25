@@ -1,0 +1,49 @@
+@use "sass:math";
+@use "sass:color";
+
+$font-nanum-gothic: "NanumGothic", sans-serif;
+$font-arial-black: "Arial Black", sans-serif;
+$font-s-core-dream: "S-CoreDream", sans-serif;
+$font-nanum-square: "NanumSquareAc", sans-serif;
+$font-noto-sans-kr: "Noto Sans KR", sans-serif;
+$font-noto-sans-sc: "Noto Sans SC", "Noto Sans KR", sans-serif;
+
+$font-main: $font-nanum-gothic;
+
+$color-primary: #eb5515;
+$color-primary-hover: color.scale(#eb5515, $lightness: -20%);
+$color-secondary: #ffcc00;
+$color-secondary-hover: color.scale(#ffcc00, $lightness: -10%);
+$color-success: #5cb85c;
+$color-danger: #d9534f;
+$color-warning: #f0ad4e;
+$color-info: #5bc0de;
+$color-default: #a5a5a5;
+$color-default-hover: color.scale(#a5a5a5, $lightness: -10%);
+$color-active: #0d6efd;
+$color-em: #083b6b;
+$color-em-hover: color.scale(#083b6b, $lightness: -10%);
+$color-tab-secondary: #f0f0f0;
+$color-tab-secondary-hover: color.scale(#f0f0f0, $lightness: -10%);
+$color-pagination-default: #f0f0f0;
+$color-pagination-default-hover: color.scale(#f0f0f0, $lightness: -10%);
+
+// 공통 색상 변수
+$color-gray-100: #eeeeee;
+$color-gray-200: #dddddd;
+$color-gray-300: #cccccc;
+$color-gray-400: #888888;
+$color-gray-500: #999999;
+$color-gray-900: #111111;
+$color-orange: #ff4e00;
+$color-blue-800: #240ef0;
+$color-blue-700: #2342ff;
+$color-black: #000000;
+$color-white: #ffffff;
+$color-green: #06961e;
+$color-red: #f31119;
+$color-yellow: #ffd600;
+$color-blue-100: #00467f;
+$color-blue-200: #1976d2;
+$color-dark: #292a2a;
+$color-placeholder: #777777;

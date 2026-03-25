@@ -1,0 +1,46 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  min-height: 100vh;
+  font-family: $font-nanum-gothic;
+  font-size: rem(16);
+  line-height: lh(24);
+  letter-spacing: -0.06em;
+  word-break: keep-all;
+}
+
+p {
+  margin: 0;
+  b {
+    font-weight: 700;
+  }
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text--primary {
+  color: $color-primary !important;
+}
+
+.text--center {
+  text-align: center !important;
+}
+
+.text--left {
+  text-align: left !important;
+}
+
+.text--right {
+  text-align: right !important;
+}

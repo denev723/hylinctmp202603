@@ -1,68 +1,285 @@
 $(document).ready(function () {
+  const updateSitemapScrollFade = () => {
+    const $body = $(".sitemap__body");
+    const $inner = $(".sitemap__inner");
+    if ($body.length === 0 || $inner.length === 0) return;
+
+    const el = $body.get(0);
+    // MDN recommends allowing a small threshold because scrollTop can be fractional.
+    const atBottom = Math.abs(el.scrollHeight - el.clientHeight - el.scrollTop) <= 1;
+    const atTop = Math.abs(el.scrollTop) <= 1;
+    $inner.toggleClass("is-scroll-end", atBottom);
+    // Show top fade once user starts scrolling down.
+    $inner.toggleClass("is-scroll-start", !atTop);
+  };
+
+  const bindSitemapScrollFade = () => {
+    const $body = $(".sitemap__body");
+    if ($body.length === 0) return;
+    // Direct binding (scroll doesn't reliably work with delegated handlers).
+    $body.off("scroll.sitemapFade").on("scroll.sitemapFade", function () {
+      updateSitemapScrollFade();
+    });
+  };
+
+  // 사이트맵 열기/닫기 (마크업: href="javascript:sitemapOpen()" 등)
+  window.sitemapOpen = function () {
+    $(".sitemap").addClass("is-active");
+    bindSitemapScrollFade();
+    // Ensure fade state is correct on open.
+    requestAnimationFrame(updateSitemapScrollFade);
+  };
+  window.sitemapClose = function () {
+    $(".sitemap").removeClass("is-active");
+  };
+
+  // 사이트맵 오버레이(패널 바깥) 클릭 시 닫기
+  $(document).on("click", ".sitemap.is-active", function (e) {
+    if ($(e.target).closest(".sitemap__inner").length === 0) {
+      window.sitemapClose();
+    }
+  });
+
+  // Sitemap scroll fade (hide bottom gradient when scrolled to end)
+  bindSitemapScrollFade();
+
+  // 사이트맵 메뉴 토글 (마크업: href="javascript:sitemapMenuToggle()")
+  window.sitemapMenuToggle = function () {
+    // 인라인 호출용 훅 (실제 토글은 클릭 이벤트에서 처리)
+  };
+  $(document).on("click", 'a[href="javascript:sitemapMenuToggle()"]', function (e) {
+    e.preventDefault();
+    $(this).closest(".sitemap-list__item").toggleClass("is-deactive");
+  });
+
   // #prepare 링크 클릭 시 "준비중입니다." alert 표시
   $('a[href="#prepare"]').on("click", function (e) {
     e.preventDefault();
     alert("준비중입니다.");
   });
 
-  // Hide lnb list when it overflows its container (.lnb).
-  (function initLnbOverflowGuard() {
-    const $lnb = $(".lnb");
-    const $list = $(".lnb .lnb-list--depth-1");
-    if ($lnb.length === 0 || $list.length === 0) return;
+  // Family site dropdown toggle + outside click close
+  $(document).on("click", ".family-site__toggle", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $(this).closest(".family-site").toggleClass("is-active");
+  });
+  $(document).on("click", function (e) {
+    if ($(e.target).closest(".family-site").length === 0) {
+      $(".family-site").removeClass("is-active");
+    }
+  });
 
-    const lnb = $lnb.get(0);
-    const list = $list.get(0);
+  // LNB logic should only run when LNB is actually visible/usable.
+  (function initLnbController() {
+    const $body = $("body");
+    const openClass = "is-lnb-open";
+    const activeItemClass = "is-active";
+    const keepSelectors = [".lnb", ".lnb-cover", ".lnb .lnb-list--depth-2"].join(", ");
+    const readyClass = "lnb-ready";
 
-    // Create a measurement clone so overflow detection remains stable
-    // even when the real list is hidden (display: none).
-    const measure = list.cloneNode(true);
-    measure.setAttribute("aria-hidden", "true");
-    measure.classList.add("lnb-list--measure");
-    Object.assign(measure.style, {
-      position: "absolute",
-      left: "-99999px",
-      top: "0",
-      visibility: "hidden",
-      pointerEvents: "none",
-      height: "auto",
-      width: "auto",
-      display: "flex",
-      flexWrap: "nowrap",
-    });
-    lnb.appendChild(measure);
+    let enabled = false;
+    let ro = null;
+    let mo = null;
+    let $measure = null;
+    let hoverKeepCount = 0;
+    let closeTimer = 0;
+    let overflowRaf = 0;
+
+    const $coverTitle = $(".lnb-cover__title");
+    const coverTitleDefault = $coverTitle.length ? $coverTitle.text() : "";
+
+    const closeAll = () => {
+      $body.removeClass(openClass);
+      $(".lnb .lnb-list--depth-1 > .lnb-list__item").removeClass(activeItemClass);
+      if ($coverTitle.length) $coverTitle.text(coverTitleDefault);
+    };
+
+    const markReady = () => {
+      $body.addClass(readyClass);
+    };
+
+    const isLnbUsable = () => {
+      const $lnb = $(".lnb");
+      if ($lnb.length === 0) return false;
+      if (!$lnb.is(":visible")) return false;
+      return ($lnb.innerWidth() || 0) > 0;
+    };
+
+    const scheduleCloseIfNeeded = () => {
+      if (closeTimer) clearTimeout(closeTimer);
+      closeTimer = setTimeout(() => {
+        closeTimer = 0;
+        if (hoverKeepCount === 0) closeAll();
+      }, 30);
+    };
+
+    const setActiveItem = ($item) => {
+      $(".lnb .lnb-list--depth-1 > .lnb-list__item").removeClass(activeItemClass);
+      $item.addClass(activeItemClass);
+      $body.addClass(openClass);
+
+      if ($coverTitle.length) {
+        const text = ($item.find("> a").text() || "").trim();
+        if (text) $coverTitle.text(text);
+      }
+    };
+
+    const ensureMeasure = () => {
+      const $lnb = $(".lnb");
+      if ($lnb.length === 0) return false;
+      if ($measure && $measure.length) return true;
+      $measure = $("<div />")
+        .addClass("lnb-list lnb-list--depth-1 lnb-list--measure")
+        .css({
+          position: "absolute",
+          left: "-99999px",
+          top: "0",
+          visibility: "hidden",
+          pointerEvents: "none",
+          height: "auto",
+          width: "auto",
+          display: "flex",
+          flexWrap: "nowrap",
+        })
+        .appendTo($lnb);
+      return true;
+    };
 
     const syncMeasure = () => {
-      measure.innerHTML = list.innerHTML;
+      if (!$measure || $measure.length === 0) return;
+      const $lists = $(".lnb .lnb-list--depth-1");
+      if ($lists.length === 0) {
+        $measure.empty();
+        return;
+      }
+      const $source = $lists.first();
+      $measure.html($source.html());
     };
 
-    const update = () => {
-      const requiredWidth = measure.scrollWidth;
-      const availableWidth = lnb.clientWidth;
-      const epsilon = 1; // avoid boundary jitter from rounding
-      const isOverflowing = requiredWidth > availableWidth + epsilon;
-      $list.toggleClass("is-hidden", isOverflowing);
+    const updateOverflow = () => {
+      const $lnb = $(".lnb");
+      if ($lnb.length === 0) return;
+      if (!ensureMeasure()) return;
+      syncMeasure();
+
+      const requiredWidth = $measure.get(0).scrollWidth || 0;
+      const availableWidth = $lnb.innerWidth() || 0;
+      const epsilon = 1;
+      $lnb.toggleClass("is-hidden", requiredWidth > availableWidth + epsilon);
     };
 
-    // React to container size changes (responsive resize/layout changes).
-    if (typeof ResizeObserver !== "undefined") {
-      const ro = new ResizeObserver(() => requestAnimationFrame(update));
-      ro.observe(lnb);
-    } else {
-      // Fallback for older browsers.
-      $(window).on("resize", update);
-    }
-
-    // React to menu item add/remove (dynamic navigation changes).
-    if (typeof MutationObserver !== "undefined") {
-      const mo = new MutationObserver(() => {
-        syncMeasure();
-        update();
+    const scheduleOverflow = () => {
+      if (overflowRaf) cancelAnimationFrame(overflowRaf);
+      overflowRaf = requestAnimationFrame(() => {
+        overflowRaf = 0;
+        updateOverflow();
       });
-      mo.observe(list, { childList: true, subtree: true, characterData: true });
+    };
+
+    const enable = () => {
+      if (enabled) return;
+      if (!isLnbUsable()) return;
+      enabled = true;
+
+      // Hover/focus bindings
+      $(document)
+        .on("mouseenter.lnbHover", ".lnb .lnb-list--depth-1 > .lnb-list__item", function () {
+          setActiveItem($(this));
+        })
+        .on("focusin.lnbHover", ".lnb .lnb-list--depth-1 > .lnb-list__item > a", function () {
+          setActiveItem($(this).closest(".lnb-list__item"));
+        })
+        .on("mouseenter.lnbHover", keepSelectors, function () {
+          hoverKeepCount += 1;
+          if (closeTimer) {
+            clearTimeout(closeTimer);
+            closeTimer = 0;
+          }
+        })
+        .on("mouseleave.lnbHover", keepSelectors, function () {
+          hoverKeepCount = Math.max(0, hoverKeepCount - 1);
+          scheduleCloseIfNeeded();
+        })
+        .on("click.lnbHover", function (e) {
+          if ($(e.target).closest(keepSelectors).length === 0) closeAll();
+        })
+        .on("keydown.lnbHover", function (e) {
+          if (e.key === "Escape") closeAll();
+        });
+
+      // Overflow bindings
+      const $lnb = $(".lnb");
+      const lnbEl = $lnb.get(0);
+      if (typeof ResizeObserver !== "undefined" && lnbEl) {
+        ro = new ResizeObserver(() => scheduleOverflow());
+        ro.observe(lnbEl);
+      }
+      $(window).on("resize.lnbOverflow", scheduleOverflow);
+      if (typeof MutationObserver !== "undefined" && lnbEl) {
+        mo = new MutationObserver(() => scheduleOverflow());
+        mo.observe(lnbEl, { childList: true, subtree: true });
+      }
+
+      scheduleOverflow();
+      // Mark ready after overflow state has had a chance to apply (avoid first-paint flicker).
+      requestAnimationFrame(() => requestAnimationFrame(markReady));
+    };
+
+    const disable = () => {
+      if (!enabled) return;
+      enabled = false;
+
+      // Unbind hover/focus handlers
+      $(document).off(".lnbHover");
+      hoverKeepCount = 0;
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+        closeTimer = 0;
+      }
+      closeAll();
+
+      // Unbind overflow handlers
+      $(window).off("resize.lnbOverflow");
+      if (overflowRaf) {
+        cancelAnimationFrame(overflowRaf);
+        overflowRaf = 0;
+      }
+      if (ro) {
+        ro.disconnect();
+        ro = null;
+      }
+      if (mo) {
+        mo.disconnect();
+        mo = null;
+      }
+      if ($measure && $measure.length) {
+        $measure.remove();
+        $measure = null;
+      }
+
+      $(".lnb").removeClass("is-hidden");
+      // Even when disabled, we don't want to keep LNB hidden forever.
+      markReady();
+    };
+
+    const reconcile = () => {
+      if (isLnbUsable()) enable();
+      else disable();
+      // If LNB doesn't exist/usable on this layout, still mark ready.
+      if (!isLnbUsable()) markReady();
+    };
+
+    // React to layout changes
+    $(window).on("resize.lnbController", reconcile);
+    if (typeof MutationObserver !== "undefined") {
+      const headerEl = document.querySelector(".site-header");
+      if (headerEl) {
+        const headerMo = new MutationObserver(() => reconcile());
+        headerMo.observe(headerEl, { childList: true, subtree: true, attributes: true });
+      }
     }
 
-    syncMeasure();
-    update();
+    reconcile();
   })();
 });

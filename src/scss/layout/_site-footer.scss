@@ -46,6 +46,11 @@
   position: absolute;
   top: rem(40);
   right: 0;
+  &.is-active {
+    .family-site__list {
+      transform: scaleY(1);
+    }
+  }
   &__toggle {
     width: 100%;
     height: rem(60);
@@ -58,7 +63,7 @@
     background-size: rem(12);
     background-position: calc(100% - #{rem(25)}) 50%;
     background-repeat: no-repeat;
-    font-family: $font-nanum-square;
+    font-family: $font-nanum-gothic;
     font-weight: 700;
     font-size: rem(16);
     line-height: 1;
@@ -79,9 +84,6 @@
     transform-origin: bottom center;
     transform: scaleY(0);
     transition: transform 0.2s ease;
-    &.is-active {
-      transform: scaleY(1);
-    }
   }
   &__link {
     display: block;
@@ -107,7 +109,7 @@
 }
 
 .copyright {
-  font-family: $font-nanum-square;
+  font-family: $font-nanum-gothic;
   font-size: rem(16);
   line-height: lh(26);
   letter-spacing: -0.04em;
@@ -118,4 +120,77 @@
   position: absolute;
   bottom: rem(75);
   right: 0;
+}
+
+@media (max-width: 980px) {
+  .family-site {
+    margin-top: rem(65);
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    bottom: auto;
+  }
+  .btn-top {
+    bottom: rem(70);
+  }
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    padding: 0 rem(20);
+    &__inner {
+      padding: rem(45) 0 rem(25);
+    }
+  }
+
+  .logo-lg {
+    height: rem(32);
+    margin-bottom: rem(17);
+    background-size: rem(231);
+  }
+
+  .site-info {
+    margin-bottom: rem(16);
+    font-size: rem(14);
+    line-height: lh(26);
+  }
+
+  .contact-list {
+    gap: 0 rem(18);
+  }
+
+  .family-site {
+    width: 100%;
+    max-width: rem(250);
+    &__toggle {
+      height: rem(46);
+      padding: rem(8) rem(35) rem(8) rem(15);
+      border-radius: rem(10);
+      background-size: rem(11);
+      background-position: calc(100% - #{rem(15)}) 50%;
+      font-size: rem(12);
+    }
+    &__list {
+      padding: rem(15) rem(15);
+      border-radius: rem(10);
+    }
+    &__link {
+      padding: rem(10) 0;
+      font-size: rem(12);
+    }
+  }
+
+  .link-list {
+    margin-bottom: rem(24);
+  }
+
+  .copyright {
+    font-size: rem(14);
+    line-height: lh(24);
+  }
+
+  .btn-top {
+    display: none !important;
+  }
 }

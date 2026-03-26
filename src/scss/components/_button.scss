@@ -177,3 +177,72 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .btn {
+    &.btn-user,
+    &.btn-login,
+    &.btn-logout,
+    &.btn-menu {
+      height: rem(40);
+      padding: 0 rem(8);
+    }
+    &.btn-user,
+    &.btn-login,
+    &.btn-logout {
+      .btn__text {
+        display: none !important;
+      }
+    }
+    &.btn-user {
+      .btn__icon {
+        width: rem(18);
+        height: rem(28);
+      }
+      .btn__text {
+        width: rem(80);
+      }
+    }
+    &.btn-login {
+      .btn__icon {
+        width: rem(20);
+        height: rem(20);
+      }
+      .btn__text {
+        width: rem(70);
+      }
+    }
+    &.btn-logout {
+      .btn__icon {
+        width: rem(20);
+        height: rem(20);
+      }
+      .btn__text {
+        width: rem(70);
+      }
+    }
+    &.btn-menu {
+      .btn__icon {
+        width: rem(26);
+        height: rem(13);
+      }
+    }
+    &.btn-close {
+      width: rem(45);
+      height: rem(45);
+      .btn__icon {
+        width: rem(20);
+        height: rem(20);
+      }
+    }
+  }
+
+  .btn-square {
+    &.btn-md {
+      min-width: rem(100);
+      padding: rem(7) rem(15);
+      font-size: rem(14);
+      line-height: lh(24);
+    }
+  }
+}

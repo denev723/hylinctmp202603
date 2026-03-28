@@ -1,4 +1,34 @@
 $(document).ready(function () {
+  // Center active tab item in horizontal scroll container (.page-tab__inner)
+  const centerActivePageTab = () => {
+    const $inner = $(".page-tab__inner");
+    const $activeItem = $(".page-tab__list > .page-tab__item.is-active").first();
+    if ($inner.length === 0 || $activeItem.length === 0) return;
+
+    const innerEl = $inner.get(0);
+    const itemEl = $activeItem.get(0);
+    if (!innerEl || !itemEl) return;
+
+    // No-op when horizontal overflow does not exist.
+    if (innerEl.scrollWidth <= innerEl.clientWidth) return;
+
+    const target = itemEl.offsetLeft + itemEl.offsetWidth / 2 - innerEl.clientWidth / 2;
+
+    const maxScrollLeft = innerEl.scrollWidth - innerEl.clientWidth;
+    const clamped = Math.max(0, Math.min(target, maxScrollLeft));
+
+    $inner.scrollLeft(clamped);
+  };
+
+  centerActivePageTab();
+  $(document).on(
+    "click.pageTabCenter",
+    ".page-tab__list > .page-tab__item > .page-tab__link",
+    function () {
+      setTimeout(centerActivePageTab, 0);
+    }
+  );
+
   const updateSitemapScrollFade = () => {
     const $body = $(".sitemap__body");
     const $inner = $(".sitemap__inner");

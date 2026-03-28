@@ -43,12 +43,13 @@ body:not(.lnb-ready) {
     z-index: 990;
     &::before {
       content: "";
-      width: 100%;
+      width: 100vw;
       height: 100%;
       background-color: $color-white;
       position: absolute;
       top: 0;
-      left: 0;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: -1;
     }
   }
@@ -60,7 +61,7 @@ body:not(.lnb-ready) {
     position: absolute;
     top: rem(-120);
     left: 0;
-    z-index: -1;
+    z-index: 980;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     transition: top 0.2s ease;
     &__bg {

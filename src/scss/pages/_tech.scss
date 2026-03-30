@@ -1,0 +1,51 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "sass:color";
+
+.conts.conts--rnd {
+  .conts__summary {
+    margin-bottom: rem(94);
+  }
+  .num-list {
+    margin-bottom: rem(40);
+  }
+}
+
+.conts.conts--tlo {
+  .conts__summary {
+    margin-bottom: rem(94);
+  }
+  .num-list {
+    margin-bottom: rem(40);
+  }
+  .img-wrap {
+    &.img-wrap--full {
+      margin-top: rem(34);
+    }
+    &.img-wrap--flex {
+      margin-top: rem(74);
+      margin-bottom: rem(50);
+    }
+  }
+}
+
+.conts.conts--equip {
+  .conts__summary {
+    margin-bottom: rem(94);
+  }
+  .num-list {
+    margin-bottom: rem(40);
+    &.num-list--type-1 {
+      .num-list__item {
+        &:has(.img-wrap--full) {
+          .num-list__item-top {
+            margin-bottom: rem(40);
+          }
+        }
+      }
+      .num-list__text {
+        margin-bottom: rem(35);
+      }
+    }
+  }
+}

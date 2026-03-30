@@ -157,11 +157,29 @@
   display: inline-block;
   font-family: $font-nanum-square;
   text-align: center;
+  &.btn--primary {
+    background-color: $color-text-primary;
+    color: $color-white;
+    transition: all 0.2s ease;
+    &:hover {
+      background-color: color.scale($color-text-primary, $lightness: 15%);
+      color: $color-white;
+    }
+  }
   &.btn-md {
     min-width: rem(120);
     padding: rem(9) rem(18);
     font-size: rem(16);
     line-height: lh(26);
+  }
+  &.btn-xs {
+    min-width: rem(70);
+    padding: rem(10);
+    border-radius: rem(8);
+    font-family: $font-nanum-gothic;
+    font-size: rem(14);
+    line-height: 1;
+    text-align: center;
   }
   &.btn-outline {
     background-color: transparent;

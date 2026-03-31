@@ -12,6 +12,34 @@
   margin: 0 auto;
 }
 
+.mb-20 {
+  margin-bottom: rem(20);
+}
+
+.mb-25 {
+  margin-bottom: rem(25);
+}
+
+.mb-30 {
+  margin-bottom: rem(30);
+}
+
+.mb-40 {
+  margin-bottom: rem(40);
+}
+
+.mb-54 {
+  margin-bottom: rem(54);
+}
+
+.mb-64 {
+  margin-bottom: rem(64);
+}
+
+.mb-94 {
+  margin-bottom: rem(94);
+}
+
 .conts {
   &__summary {
     font-family: $font-nanum-square;
@@ -26,9 +54,6 @@
 }
 
 .basic-list {
-  &__item-top {
-    margin-bottom: rem(30);
-  }
   &__item-title {
     font-family: $font-s-core-dream;
     font-weight: 500;
@@ -50,7 +75,6 @@
         justify-content: center;
         align-items: center;
         gap: 0 rem(10);
-        margin-bottom: rem(20);
       }
     }
     .num-list__num {
@@ -79,6 +103,14 @@
       font-size: rem(18);
       line-height: lh(30);
       color: $color-black;
+      vertical-align: middle;
+      em {
+        font-weight: 700;
+        font-size: rem(20);
+        line-height: lh(30);
+        color: $color-blue-300;
+        vertical-align: middle;
+      }
     }
   }
 }
@@ -157,6 +189,150 @@
         color: $color-blue-300;
       }
     }
+    &.box-list--type-2 {
+      gap: rem(10) 0;
+      .box-list__item {
+        display: flex;
+        padding: rem(28) rem(38);
+        border-radius: rem(20);
+        background-color: $color-gray-50;
+        &.eq-0,
+        &.eq-1 {
+          .box-list__title {
+            font-weight: 800;
+            font-size: rem(24);
+            line-height: lh(34);
+          }
+        }
+        &.eq-0 {
+          .box-list__title {
+            color: $color-secondary;
+          }
+          .box-list__content {
+            font-family: $font-nanum-square;
+            font-weight: 700;
+            font-size: rem(20);
+            line-height: lh(34);
+            text-align: center;
+          }
+        }
+        &.eq-1 {
+          .box-list__title {
+            color: $color-em;
+          }
+        }
+        &.eq-2 {
+          padding-top: rem(40);
+          padding-bottom: rem(40);
+          .box-list__title {
+            font-weight: 600;
+            font-size: rem(22);
+            line-height: lh(30);
+          }
+        }
+        .box-list__title {
+          width: rem(216);
+          flex-shrink: 0;
+          font-family: $font-s-core-dream;
+        }
+        .box-list__content {
+          flex: 1;
+        }
+      }
+    }
+    &.box-list--type-3 {
+      gap: rem(10) 0;
+      .box-list__item {
+        display: flex;
+        align-items: center;
+        padding: rem(30) rem(40) rem(30) rem(25);
+        border-radius: rem(20);
+        background-color: $color-gray-50;
+        font-family: $font-nanum-square;
+        line-height: lh(30);
+      }
+      .box-list__item-title {
+        width: rem(200);
+        flex-shrink: 0;
+        padding-left: rem(55);
+        font-weight: 700;
+        font-size: rem(20);
+        position: relative;
+        &::before {
+          content: "";
+          width: rem(40);
+          height: rem(40);
+          background-image: url(../images/subpage/check-square-orange.png);
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+        }
+      }
+      .box-list__item-content {
+        flex: 1;
+        font-size: rem(20);
+        line-height: lh(30);
+      }
+      .box-list__item-info {
+        display: flex;
+        align-items: center;
+        gap: 0 rem(10);
+        flex-shrink: 0;
+        .num {
+          font-family: $font-s-core-dream;
+          font-weight: 800;
+          font-size: rem(30);
+          line-height: 1;
+          color: $color-secondary;
+        }
+        .text {
+          font-family: $font-nanum-square;
+          font-size: rem(20);
+          line-height: lh(30);
+        }
+      }
+    }
+    &.box-list--type-4 {
+      gap: rem(10) 0;
+      .box-list__item {
+        display: flex;
+        gap: 0 rem(15);
+        padding: rem(26) rem(70) rem(26) rem(25);
+        border-radius: rem(20);
+        background-color: $color-gray-50;
+        .box-list__item-icon {
+          width: rem(40);
+          height: rem(40);
+          flex-shrink: 0;
+          background-image: url(../images/subpage/check-square-orange.png);
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+        .box-list__item-content {
+          flex: 1;
+        }
+        .box-list__item-title {
+          font-family: $font-nanum-square;
+          font-weight: 700;
+          font-size: rem(22);
+          line-height: lh(40);
+          em {
+            color: $color-secondary;
+          }
+        }
+        .divide {
+          width: 100%;
+          height: rem(1);
+          margin: rem(17) 0 rem(20);
+          background-color: $color-gray-200;
+        }
+      }
+    }
   }
   &.box-list--complex {
     &.box-list--type-1 {
@@ -226,6 +402,39 @@
         }
       }
     }
+    &.box-list--type-2 {
+      gap: 0 rem(10);
+      .box-list__item {
+        width: calc((100% - #{rem(10)}) / 2);
+        min-height: rem(120);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: rem(20) rem(40);
+        border-radius: rem(20);
+        background-color: $color-gray-50;
+      }
+      .box-list__text {
+        padding-left: rem(42);
+        font-family: $font-nanum-square;
+        font-size: rem(20);
+        line-height: lh(32);
+        position: relative;
+        &::before {
+          content: "";
+          width: rem(32);
+          height: rem(32);
+          background-image: url(../images/subpage/check-round-orange.png);
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+        }
+      }
+    }
   }
 }
 
@@ -245,6 +454,25 @@
         background-color: $color-text-primary;
         position: absolute;
         top: rem(13);
+        left: 0;
+      }
+    }
+  }
+  &.dot-list--type-2 {
+    .dot-list__item {
+      padding-left: rem(12);
+      font-family: $font-nanum-square;
+      font-size: rem(18);
+      line-height: lh(34);
+      position: relative;
+      &::before {
+        content: "";
+        width: rem(4);
+        height: rem(4);
+        border-radius: 50%;
+        background-color: $color-text-primary;
+        position: absolute;
+        top: rem(15);
         left: 0;
       }
     }
@@ -289,6 +517,34 @@
   }
 }
 
+.content-list {
+  &__item {
+    margin-bottom: rem(40);
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &-top {
+      display: flex;
+      justify-content: center;
+    }
+    &-title {
+      padding-left: rem(42);
+      background-image: url(../images/subpage/check-round-orange.png);
+      background-size: rem(32);
+      background-repeat: no-repeat;
+      background-position: 0% 50%;
+      font-family: $font-s-core-dream;
+      font-weight: 700;
+      font-size: rem(22);
+      line-height: lh(32);
+      color: $color-text-primary;
+      em {
+        color: $color-secondary;
+      }
+    }
+  }
+}
+
 .contact-box {
   padding: rem(40);
   border-radius: rem(20);
@@ -301,7 +557,11 @@
   }
   &__inner {
     display: flex;
+    align-items: center;
     gap: 0 rem(35);
+    &:has(.contact-box__item-content) {
+      align-items: initial;
+    }
   }
   &__icon {
     width: rem(100);
@@ -371,6 +631,13 @@
       color: $color-blue-300;
       font-weight: 700;
       font-size: rem(20);
+      vertical-align: middle;
+    }
+    b {
+      color: $color-secondary;
+      font-weight: 700;
+      font-size: rem(20);
+      vertical-align: middle;
     }
   }
 }
@@ -417,6 +684,9 @@
         font-size: rem(18);
         line-height: lh(28);
         vertical-align: middle;
+        em {
+          color: $color-secondary;
+        }
         &.top-left {
           border-top-left-radius: rem(20);
         }

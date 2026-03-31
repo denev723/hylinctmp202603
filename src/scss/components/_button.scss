@@ -157,18 +157,43 @@
   display: inline-block;
   font-family: $font-nanum-square;
   text-align: center;
-  &.btn--primary {
+  &.btn-primary {
     background-color: $color-text-primary;
     color: $color-white;
     transition: all 0.2s ease;
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: color.scale($color-text-primary, $lightness: 15%);
       color: $color-white;
     }
   }
+  &.btn-icon {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0 rem(15);
+    .btn-square__icon {
+      &.btn-square__icon--link {
+        width: rem(11);
+        height: rem(11);
+        background-image: url(../images/subpage/link-icon.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+    }
+  }
+  &.btn-lg {
+    min-width: rem(170);
+    padding: rem(13) rem(17) rem(13) rem(21);
+    border-radius: rem(12);
+    font-size: rem(15);
+    text-align: initial;
+  }
   &.btn-md {
     min-width: rem(120);
     padding: rem(9) rem(18);
+    border-radius: rem(12);
     font-size: rem(16);
     line-height: lh(26);
   }

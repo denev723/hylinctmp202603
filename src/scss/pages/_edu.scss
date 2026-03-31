@@ -1,0 +1,11 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "sass:color";
+
+.conts.conts--education {
+  .line-list {
+    &__btn-wrap {
+      margin-top: rem(24);
+    }
+  }
+}

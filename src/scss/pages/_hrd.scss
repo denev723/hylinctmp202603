@@ -2,27 +2,8 @@
 @use "../abstracts/mixins" as *;
 @use "sass:color";
 
-.conts.conts--intern {
-  .conts__summary {
-    margin-bottom: rem(94);
-  }
-  .num-list--type-1 {
-    margin-bottom: rem(40);
-  }
-}
-
-.conts.conts--career {
-  .conts__summary {
-    margin-bottom: rem(94);
-  }
-  .basic-list--type-1 {
-    margin-bottom: rem(40);
-  }
-}
-
-.conts.conts--career {
+.conts.conts--conv {
   .gray-box {
-    margin-bottom: rem(20);
     &:has(.line-list) {
       .gray-box__inner {
         margin-bottom: rem(42);

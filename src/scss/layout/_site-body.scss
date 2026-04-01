@@ -124,7 +124,8 @@
   }
 }
 
-@media (max-width: 768px) {
+/* media quries */
+@media (max-width: 780px) {
   .site-body {
     &.site-body--sub {
       padding: rem(60) rem(20) rem(100);
@@ -133,6 +134,7 @@
 
   .page-title {
     margin-top: rem(60);
+    margin-bottom: rem(35);
     font-size: rem(22);
     span {
       padding-bottom: rem(42);

@@ -167,7 +167,8 @@
   }
 }
 
-@media (max-width: 768px) {
+/* media quries */
+@media (max-width: 780px) {
   .sitemap {
     &__inner {
       width: calc(100% - #{rem(20)});

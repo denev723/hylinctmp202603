@@ -221,7 +221,8 @@
   }
 }
 
-@media (max-width: 768px) {
+/* media quries */
+@media (max-width: 780px) {
   .btn {
     &.btn-user,
     &.btn-login,
@@ -281,11 +282,32 @@
   }
 
   .btn-square {
+    &.btn-icon {
+      gap: 0 rem(10);
+      .btn-square__icon {
+        &.btn-square__icon--link {
+          width: rem(9);
+          height: rem(9);
+        }
+      }
+    }
+    &.btn-lg {
+      min-width: rem(140);
+      padding: rem(11) rem(14);
+      border-radius: rem(8);
+      font-size: rem(13);
+    }
     &.btn-md {
       min-width: rem(100);
       padding: rem(7) rem(15);
       font-size: rem(14);
       line-height: lh(24);
+    }
+    &.btn-xs {
+      min-width: rem(60);
+      padding: rem(9) rem(8);
+      border-radius: rem(6);
+      font-size: rem(12);
     }
   }
 }

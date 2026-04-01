@@ -13,3 +13,18 @@
     }
   }
 }
+
+/* media quries */
+@media (max-width: 780px) {
+  .conts.conts--semicenter {
+    .num-list {
+      .num-list__item {
+        &.eq-0 {
+          .gray-box {
+            margin-bottom: rem(45);
+          }
+        }
+      }
+    }
+  }
+}

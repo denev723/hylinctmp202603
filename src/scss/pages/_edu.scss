@@ -9,3 +9,14 @@
     }
   }
 }
+
+/* media quries */
+@media (max-width: 780px) {
+  .conts.conts--education {
+    .line-list {
+      &__btn-wrap {
+        margin-top: rem(19);
+      }
+    }
+  }
+}

@@ -190,6 +190,7 @@ body:not(.lnb-ready) {
   }
 }
 
+/* media quries */
 @media (max-width: 1726px) {
   .lnb {
     .lnb-list {
@@ -204,7 +205,7 @@ body:not(.lnb-ready) {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 780px) {
   .site-header {
     &__inner {
       height: rem(80);

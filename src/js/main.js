@@ -115,6 +115,8 @@ $(document).ready(function () {
     let hoverKeepCount = 0;
     let closeTimer = 0;
     let overflowRaf = 0;
+    let lastPointerX = -1;
+    let lastPointerY = -1;
 
     const $coverTitle = $(".lnb-cover__title");
     const coverTitleDefault = $coverTitle.length ? $coverTitle.text() : "";
@@ -136,12 +138,23 @@ $(document).ready(function () {
       return ($lnb.innerWidth() || 0) > 0;
     };
 
+    const isPointOverKeepArea = (clientX, clientY) => {
+      if (typeof document.elementFromPoint !== "function") return false;
+      if (clientX < 0 || clientY < 0) return false;
+      const el = document.elementFromPoint(clientX, clientY);
+      if (!el) return false;
+      return $(el).closest(keepSelectors).length > 0;
+    };
+
     const scheduleCloseIfNeeded = () => {
       if (closeTimer) clearTimeout(closeTimer);
       closeTimer = setTimeout(() => {
         closeTimer = 0;
-        if (hoverKeepCount === 0) closeAll();
-      }, 30);
+        if (hoverKeepCount !== 0) return;
+        // Counters can briefly hit 0 while the pointer is still over the menu (browser / hit-test gaps).
+        if (isPointOverKeepArea(lastPointerX, lastPointerY)) return;
+        closeAll();
+      }, 150);
     };
 
     const setActiveItem = ($item) => {
@@ -214,13 +227,19 @@ $(document).ready(function () {
 
       // Hover/focus bindings
       $(document)
+        .on("mousemove.lnbHover", function (e) {
+          lastPointerX = e.clientX;
+          lastPointerY = e.clientY;
+        })
         .on("mouseenter.lnbHover", ".lnb .lnb-list--depth-1 > .lnb-list__item", function () {
           setActiveItem($(this));
         })
         .on("focusin.lnbHover", ".lnb .lnb-list--depth-1 > .lnb-list__item > a", function () {
           setActiveItem($(this).closest(".lnb-list__item"));
         })
-        .on("mouseenter.lnbHover", keepSelectors, function () {
+        .on("mouseenter.lnbHover", keepSelectors, function (e) {
+          lastPointerX = e.clientX;
+          lastPointerY = e.clientY;
           hoverKeepCount += 1;
           if (closeTimer) {
             clearTimeout(closeTimer);
@@ -263,6 +282,8 @@ $(document).ready(function () {
       // Unbind hover/focus handlers
       $(document).off(".lnbHover");
       hoverKeepCount = 0;
+      lastPointerX = -1;
+      lastPointerY = -1;
       if (closeTimer) {
         clearTimeout(closeTimer);
         closeTimer = 0;

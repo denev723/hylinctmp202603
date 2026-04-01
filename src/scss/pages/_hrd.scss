@@ -11,3 +11,16 @@
     }
   }
 }
+
+/* media quries */
+@media (max-width: 780px) {
+  .conts.conts--conv {
+    .gray-box {
+      &:has(.line-list) {
+        .gray-box__inner {
+          margin-bottom: rem(32);
+        }
+      }
+    }
+  }
+}

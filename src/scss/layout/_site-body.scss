@@ -2,20 +2,43 @@
 @use "../abstracts/mixins" as *;
 @use "sass:color";
 
+body.is-site-header-show.page-tab-fixed {
+  .page-tab {
+    top: rem(101);
+  }
+}
+
+body.page-tab-fixed {
+  .page-tab {
+    max-width: 100%;
+    border-radius: 0;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform-origin: center;
+    transform: translateX(-50%);
+    z-index: 970;
+  }
+}
+
 .site-body {
   min-height: rem(500);
   &.site-body--sub {
-    padding: rem(120) rem(50) rem(160);
+    padding: rem(101) rem(50) 0;
     .site-body__inner {
-      max-width: rem(1280);
-      margin: 0 auto;
+      padding: rem(120) 0 rem(160);
+      &:has(.page-tab-wrap) {
+        .page-title--xl {
+          margin-bottom: rem(60);
+        }
+      }
     }
   }
 }
 
 .page-title {
-  margin-top: rem(110);
-  margin-bottom: rem(55);
+  max-width: rem(1280);
+  margin: rem(110) auto rem(55);
   font-family: $font-s-core-dream;
   font-weight: 700;
   font-size: rem(34);
@@ -75,11 +98,21 @@
   }
 }
 
+.page-tab-wrap {
+  width: 100%;
+  height: rem(80);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .page-tab {
+  width: 100%;
+  max-width: rem(1280);
   padding: rem(15) rem(20);
-  margin-top: rem(60);
   border-radius: rem(24);
   background-color: $color-text-primary;
+  transition: max-width 0.3s ease, border-radius 0.3s ease, top 0.3s ease;
   &__inner {
     overflow-x: auto;
     -ms-overflow-style: none;
@@ -126,15 +159,28 @@
 
 /* media quries */
 @media (max-width: 780px) {
+  body.is-site-header-show.page-tab-fixed {
+    .page-tab {
+      top: rem(81);
+    }
+  }
+
   .site-body {
     &.site-body--sub {
-      padding: rem(60) rem(20) rem(100);
+      padding: rem(81) rem(20) 0;
+      .site-body__inner {
+        padding: rem(100) 0 rem(120);
+        &:has(.page-tab-wrap) {
+          .page-title--xl {
+            margin-bottom: rem(40);
+          }
+        }
+      }
     }
   }
 
   .page-title {
-    margin-top: rem(60);
-    margin-bottom: rem(35);
+    margin: rem(60) auto rem(35);
     font-size: rem(22);
     span {
       padding-bottom: rem(42);
@@ -162,9 +208,12 @@
     }
   }
 
+  .page-tab-wrap {
+    height: rem(70);
+  }
+
   .page-tab {
     padding: rem(15);
-    margin-top: rem(40);
     border-radius: rem(24);
     &__link {
       padding: rem(10) rem(14);

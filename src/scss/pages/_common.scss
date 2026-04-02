@@ -41,6 +41,8 @@
 }
 
 .conts {
+  max-width: rem(1280);
+  margin: 0 auto;
   &__summary {
     font-family: $font-nanum-square;
     font-size: rem(18);

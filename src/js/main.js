@@ -1,4 +1,145 @@
 $(document).ready(function () {
+  // AOS: responsive data-aos per breakpoint (mobile/tablet/desktop)
+  (function initAosController() {
+    // Breakpoints aligned with `src/scss/pages/_common.scss`
+    // Note: there is also a 942px breakpoint in SCSS, but AOS tiers intentionally ignore it.
+    const AOS_BP_MOBILE_MAX = 780;
+    const AOS_BP_TABLET_MAX = 1114;
+
+    const getTier = () => {
+      const w = window.innerWidth || 0;
+      if (w < AOS_BP_MOBILE_MAX) return "mobile";
+      if (w < AOS_BP_TABLET_MAX) return "tablet";
+      return "desktop";
+    };
+
+    const applyResponsiveAosAttributes = () => {
+      const tier = getTier();
+      const $nodes = $("[data-aos]");
+      if ($nodes.length === 0) return;
+
+      $nodes.each(function () {
+        const $el = $(this);
+        const base = $el.attr("data-aos-base") || $el.attr("data-aos") || "";
+        if (!$el.is("[data-aos-base]")) $el.attr("data-aos-base", base);
+
+        const override = $el.attr(`data-aos-${tier}`) || "";
+        const next = (override || base).trim();
+        if (next) $el.attr("data-aos", next);
+
+        // Desktop-only delay: apply on desktop, remove on other tiers
+        const desktopDelay = $el.attr("data-aos-delay-desktop");
+        const currentDelay = $el.attr("data-aos-delay");
+        if (tier === "desktop") {
+          if (desktopDelay != null && String(desktopDelay).trim() !== "") {
+            $el.attr("data-aos-delay", String(desktopDelay).trim());
+          }
+          // else: keep existing data-aos-delay as-is
+        } else {
+          // If the author used desktop-only delay, ensure it doesn't apply on smaller breakpoints.
+          if (desktopDelay != null || currentDelay != null) $el.removeAttr("data-aos-delay");
+        }
+      });
+    };
+
+    const hasAos = () =>
+      typeof window.AOS !== "undefined" && window.AOS && typeof window.AOS.init === "function";
+
+    const applyAndRefresh = () => {
+      applyResponsiveAosAttributes();
+      if (!hasAos()) return;
+      if (typeof window.AOS.refresh === "function") window.AOS.refresh();
+    };
+
+    const initIfNeeded = () => {
+      applyResponsiveAosAttributes();
+      if (!hasAos()) return;
+      window.AOS.init();
+      if (typeof window.AOS.refreshHard === "function") window.AOS.refreshHard();
+    };
+
+    let resizeTimer = 0;
+    const onResize = () => {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        resizeTimer = 0;
+        applyAndRefresh();
+      }, 150);
+    };
+
+    initIfNeeded();
+    $(window).on("resize.aosResponsive", onResize);
+  })();
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let lastScroll = 0;
+  let wheelDirection = null;
+  const SITE_HEADER_TOP_SHOW_Y = 3;
+  const SITE_HEADER_DELTA = 8;
+
+  $(window).on("wheel", function (e) {
+    const deltaY = e.originalEvent.deltaY;
+    wheelDirection = deltaY > 0 ? "down" : "up";
+    handleScrollBehavior(wheelDirection);
+  });
+
+  $(window).on("scroll", function () {
+    const currentScroll = $(this).scrollTop();
+    const diff = currentScroll - lastScroll;
+    if (Math.abs(diff) < SITE_HEADER_DELTA) return;
+    wheelDirection = diff > 0 ? "down" : "up";
+    lastScroll = currentScroll;
+    handleScrollBehavior(wheelDirection);
+  });
+
+  function handleScrollBehavior(direction) {
+    const scrollTop = $(window).scrollTop();
+    if (scrollTop <= SITE_HEADER_TOP_SHOW_Y) {
+      $("body").removeClass("is-site-header-hide").addClass("is-site-header-show");
+      return;
+    }
+    if (direction === "down") {
+      $("body").removeClass("is-site-header-show");
+      $("body").addClass("is-site-header-hide");
+    } else {
+      $("body").removeClass("is-site-header-hide");
+      $("body").addClass("is-site-header-show");
+    }
+  }
+
+  const $body = $("body");
+  const $pageTabWrap = $(".page-tab-wrap");
+  const fixedPageTabClass = "page-tab-fixed";
+  const showHeaderClass = "is-site-header-show";
+  let headerHeight = 0;
+
+  updateHeaderHeight();
+  handleTabBehavior();
+
+  $(window).on("scroll", handleTabBehavior);
+  $(window).on("resize ", function () {
+    updateHeaderHeight();
+    handleTabBehavior();
+  });
+
+  function handleTabBehavior() {
+    if ($pageTabWrap.length === 0 || $pageTabWrap.children(".page-tab").length === 0) return;
+
+    const scrollTop = $(window).scrollTop();
+    const baseline = $pageTabWrap.offset().top;
+
+    if ($body.hasClass(showHeaderClass)) {
+      $body.toggleClass(fixedPageTabClass, scrollTop >= baseline - headerHeight);
+    } else {
+      $body.toggleClass(fixedPageTabClass, scrollTop >= baseline);
+    }
+  }
+
+  function updateHeaderHeight() {
+    headerHeight = window.innerWidth < 781 ? 81 : 101;
+  }
+
   // Center active tab item in horizontal scroll container (.page-tab__inner)
   const centerActivePageTab = () => {
     const $inner = $(".page-tab__inner");

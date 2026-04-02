@@ -22,6 +22,18 @@ body.is-lnb-open {
   }
 }
 
+body.is-site-header-hide {
+  .site-header {
+    top: rem(-101);
+  }
+}
+
+body.is-site-header-show {
+  .site-header {
+    top: 0;
+  }
+}
+
 // Prevent initial flicker before JS computes LNB state.
 body:not(.lnb-ready) {
   .lnb {
@@ -31,7 +43,12 @@ body:not(.lnb-ready) {
 }
 
 .site-header {
-  position: relative;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 990;
+  transition: top 0.3s ease;
   &__inner {
     max-width: rem(1900);
     height: rem(100);
@@ -206,6 +223,12 @@ body:not(.lnb-ready) {
 }
 
 @media (max-width: 780px) {
+  body.is-site-header-hide {
+    .site-header {
+      top: rem(-81);
+    }
+  }
+
   .site-header {
     &__inner {
       height: rem(80);

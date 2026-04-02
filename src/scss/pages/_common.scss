@@ -28,6 +28,10 @@
   margin-bottom: rem(40);
 }
 
+.mb-50 {
+  margin-bottom: rem(50);
+}
+
 .mb-54 {
   margin-bottom: rem(54);
 }
@@ -485,11 +489,13 @@
 
 .line-list {
   &.line-list--type-1 {
-    border-top: rem(2) solid $color-text-primary;
     .line-list__item {
       display: flex;
       padding: rem(54) 0;
       border-bottom: 1px solid $color-gray-200;
+      &:first-child {
+        border-top: rem(2) solid $color-text-primary;
+      }
       &:last-child {
         border-bottom-color: transparent;
       }
@@ -847,6 +853,10 @@
 
   .mb-40 {
     margin-bottom: rem(25);
+  }
+
+  .mb-50 {
+    margin-bottom: rem(35);
   }
 
   .mb-54 {

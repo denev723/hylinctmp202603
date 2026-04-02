@@ -54,7 +54,10 @@ $(document).ready(function () {
     const initIfNeeded = () => {
       applyResponsiveAosAttributes();
       if (!hasAos()) return;
-      window.AOS.init();
+      window.AOS.init({
+        duration: 600,
+        easing: "ease-out",
+      });
       if (typeof window.AOS.refreshHard === "function") window.AOS.refreshHard();
     };
 

@@ -1,0 +1,23 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "sass:color";
+
+.box {
+  max-width: rem(1280);
+  margin: 0 auto;
+  &.box-apply-edu-rg {
+    .box-body {
+      margin-bottom: rem(40);
+    }
+  }
+}
+
+@media (max-width: 780px) {
+  .box {
+    &.box-apply-edu-rg {
+      .box-body {
+        margin-bottom: rem(30);
+      }
+    }
+  }
+}

@@ -1,0 +1,92 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "sass:color";
+
+// Bootstrap 3-style alerts
+.alert {
+  padding: rem(15);
+  border: 1px solid transparent;
+  border-radius: rem(4);
+  font-size: rem(16);
+
+  p,
+  ul,
+  ol {
+    margin-bottom: 0;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+.alert__heading {
+  margin-top: 0;
+  margin-bottom: rem(5);
+  font-weight: 700;
+}
+
+.alert__link {
+  font-weight: 700;
+}
+
+.alert-dismissible {
+  padding-right: rem(35);
+  position: relative;
+}
+
+.alert__close {
+  position: absolute;
+  top: rem(8);
+  right: rem(10);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  line-height: 1;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+
+  &:hover,
+  &:focus {
+    opacity: 0.8;
+  }
+}
+
+@mixin alert-variant($bg, $border, $text) {
+  background-color: $bg;
+  border-color: $border;
+  color: $text;
+
+  hr {
+    border-top-color: color.scale($border, $lightness: -5%);
+  }
+
+  .alert__link,
+  a {
+    color: color.scale($text, $lightness: -10%);
+  }
+}
+
+.alert-success {
+  @include alert-variant(#dff0d8, #d6e9c6, #3c763d);
+}
+
+.alert-info {
+  @include alert-variant(#d9edf7, #bce8f1, #31708f);
+}
+
+.alert-warning {
+  @include alert-variant(#fcf8e3, #faebcc, #8a6d3b);
+}
+
+.alert-danger {
+  @include alert-variant(#f2dede, #ebccd1, #a94442);
+}
+
+@media (max-width: 780px) {
+  .alert {
+    font-size: rem(12);
+  }
+}

@@ -1,0 +1,43 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "sass:color";
+
+.gray-box--info {
+  .label {
+    min-width: rem(74);
+    display: inline-block;
+    padding: rem(12);
+    border-radius: rem(700);
+    border: 2px solid transparent;
+    background-color: transparent;
+    font-weight: 500;
+    font-size: rem(12);
+    text-align: center;
+    &.label-primary {
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+    &.label-success {
+      border-color: $color-success;
+      color: $color-success;
+    }
+    &.label-danger {
+      border-color: $color-danger;
+      color: $color-danger;
+    }
+    &.label-warning {
+      border-color: $color-warning;
+      color: $color-warning;
+    }
+    &.label-default {
+      border-color: #777777;
+      color: #777777;
+    }
+  }
+}
+
+@media (max-width: 780px) {
+  .label {
+    padding: rem(8) rem(10);
+  }
+}

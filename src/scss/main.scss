@@ -12,9 +12,14 @@
 
 // components
 @use "components/button" as *;
+@use "components/alert" as *;
+@use "components/box" as *;
+@use "components/pagination" as *;
+@use "components/label" as *;
 
 // pages
 @use "pages/common" as *;
+@use "pages/intro" as *;
 @use "pages/hrd" as *;
 @use "pages/tech" as *;
 @use "pages/union" as *;

@@ -1,0 +1,127 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "sass:color";
+
+.conts.conts--greeting {
+  .conts__hero {
+    height: rem(380);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: rem(20);
+    border-radius: rem(20);
+    background-image: url(../images/subpage/intro/greeting/img-1.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    p {
+      font-family: $font-s-core-dream;
+      font-weight: 500;
+      font-size: rem(18);
+      line-height: lh(26);
+      color: $color-white;
+      text-align: center;
+    }
+  }
+  .flex-wrap {
+    display: flex;
+    &__title {
+      width: rem(530);
+      p {
+        padding-bottom: rem(217);
+        background-image: url(../images/subpage/intro/greeting/logo-1.png);
+        background-size: rem(177);
+        background-repeat: no-repeat;
+        background-position: 0% 100%;
+        font-family: $font-s-core-dream;
+        font-weight: 700;
+        font-size: rem(130);
+        line-height: 1;
+        color: $color-text-primary;
+        em {
+          color: #008aff;
+        }
+      }
+    }
+    &__content {
+      width: calc(100% - #{rem(530)});
+      p {
+        font-family: $font-nanum-square;
+        font-size: rem(18);
+        line-height: lh(34);
+      }
+    }
+  }
+}
+
+.dept-chair {
+  display: flex;
+  align-items: flex-end;
+  gap: 0 rem(11);
+  margin-top: rem(72);
+  font-family: $font-nanum-square;
+  line-height: 1;
+  &__title {
+    font-weight: 700;
+    font-size: rem(20);
+  }
+  &__name {
+    font-weight: 800;
+    font-size: rem(30);
+  }
+}
+
+@media (max-width: 1114px) {
+  .conts.conts--greeting {
+    .flex-wrap {
+      flex-direction: column;
+      gap: rem(72) 0;
+      &__title {
+        width: 100%;
+      }
+      &__content {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 780px) {
+  .conts.conts--greeting {
+    .conts__hero {
+      height: rem(230);
+      border-radius: rem(16);
+      p {
+        font-size: rem(16);
+        line-height: lh(24);
+      }
+    }
+    .flex-wrap {
+      &__title {
+        p {
+          padding-bottom: rem(147);
+          background-size: rem(107);
+          font-size: rem(60);
+        }
+      }
+      &__content {
+        p {
+          font-size: rem(14);
+          line-height: lh(30);
+        }
+      }
+    }
+  }
+
+  .dept-chair {
+    gap: 0 rem(9);
+    margin-top: rem(52);
+    &__title {
+      font-size: rem(16);
+    }
+    &__name {
+      font-size: rem(22);
+    }
+  }
+}

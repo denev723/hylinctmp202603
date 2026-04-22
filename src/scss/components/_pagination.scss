@@ -32,7 +32,7 @@
         background-color: #3d342f;
         color: $color-white;
         &:hover {
-          background-color: lighten(#3d342f, 5%);
+          background-color: color.scale(#3d342f, $lightness: 5%);
         }
       }
     }

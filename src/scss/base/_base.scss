@@ -7,7 +7,7 @@
 
 html {
   &::before {
-    content: url(../images/hamburger-orange.png);
+    content: url(../images/hamburger-orange.png) url(../images/board/default/notice-rarr-b.png);
     position: absolute;
     width: 0;
     height: 0;

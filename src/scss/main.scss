@@ -16,9 +16,12 @@
 @use "components/box" as *;
 @use "components/pagination" as *;
 @use "components/label" as *;
+@use "components/form" as *;
+@use "components/af-file" as *;
 
 // pages
 @use "pages/common" as *;
+@use "pages/boards" as *;
 @use "pages/intro" as *;
 @use "pages/hrd" as *;
 @use "pages/tech" as *;

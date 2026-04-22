@@ -1,0 +1,218 @@
+@use "abstracts/variables" as *;
+@use "abstracts/mixins" as *;
+@use "sass:color";
+
+@use "components/button" as *;
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.box-container {
+  width: 210mm;
+  height: 297mm;
+  padding: 38.8mm 8.8mm 8.8mm;
+  .box-certificates {
+    height: 100%;
+    padding: 2.9mm;
+    border-radius: 5.2mm;
+    border: 0.8mm solid #212529;
+    .box-wrapper {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border-radius: 5.2mm;
+      border: 0.1mm solid #c1c1c1;
+      .box-header {
+        padding: 37.72mm 6.31mm 0;
+        margin-bottom: 17mm;
+        position: relative;
+        .img-wrap {
+          width: 49.3mm;
+          height: 38.1mm;
+          background-color: $color-white;
+          text-align: center;
+          position: absolute;
+          top: -17.8mm;
+          left: 50%;
+          transform: translateX(-50%);
+          img {
+            width: 38.1mm;
+          }
+        }
+        .cert-num {
+          font-family: "Noto Serif KR", serif;
+          font-weight: 400;
+          font-size: 15pt;
+          line-height: 1;
+          letter-spacing: -0.02em;
+          position: absolute;
+          top: 6.82mm;
+          left: 6.31mm;
+        }
+        .cert-title {
+          font-family: "Noto Serif KR", serif;
+          font-weight: 500;
+          font-size: 40pt;
+          line-height: 1;
+          letter-spacing: 0;
+          text-align: center;
+        }
+      }
+    }
+    .box-body {
+      flex: 1;
+      padding: 29.18mm 9.38mm 0;
+      position: relative;
+      .logo {
+        width: 101.43mm;
+        position: absolute;
+        top: 37.6mm;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 0;
+      }
+      ul {
+        list-style: none;
+        padding-inline-start: 0;
+        margin: 0;
+      }
+      .cert-p-info-list {
+        position: absolute;
+        top: -2.91mm;
+        right: 9.38mm;
+        li {
+          p {
+            font-family: "Noto Serif KR", serif;
+            font-weight: 400;
+            font-size: 16pt;
+            line-height: 30pt;
+            letter-spacing: -0.04em;
+            text-align: left;
+          }
+        }
+      }
+      .cert-info-list {
+        max-width: 690mm;
+        width: fit-content;
+        margin: 0 auto 13.38mm;
+        li {
+          p {
+            font-family: "Noto Serif KR", serif;
+            font-weight: 400;
+            font-size: 16pt;
+            line-height: 28pt;
+            letter-spacing: -0.04em;
+            text-align: left;
+          }
+        }
+      }
+      .cert-desc {
+        padding: 0 11.82mm;
+        margin-bottom: 20.43mm;
+        p {
+          font-family: "Noto Serif KR", serif;
+          font-weight: 400;
+          font-size: 16pt;
+          line-height: 30pt;
+          letter-spacing: -0.04em;
+          text-align: left;
+        }
+      }
+      .cert-completion-date {
+        margin-bottom: 15.8mm;
+        p {
+          font-family: "Noto Serif KR", serif;
+          font-weight: 400;
+          font-size: 16pt;
+          line-height: 1;
+          letter-spacing: -0.04em;
+          text-align: center;
+        }
+      }
+      .bottom {
+        width: 100%;
+        padding: 0 9.38mm;
+        position: absolute;
+        left: 50%;
+        bottom: 13.5mm;
+        transform: translateX(-50%);
+        .cert-institution {
+          margin-bottom: 5.5mm;
+          p {
+            font-family: "Noto Serif KR", serif;
+            font-weight: 400;
+            font-size: 16pt;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            text-align: left;
+          }
+        }
+        .cert-representation {
+          p {
+            font-family: "Noto Serif KR", serif;
+            font-weight: 700;
+            font-size: 20pt;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            text-align: center;
+            .name {
+              display: inline-block;
+              margin-left: 4.8mm;
+              letter-spacing: 0.5em;
+            }
+          }
+        }
+        .sign {
+          width: 25mm;
+          position: absolute;
+          bottom: -2mm;
+          right: 24mm;
+          z-index: 0;
+        }
+      }
+    }
+  }
+}
+.btn-wrapper {
+  margin: 40px 0;
+  text-align: center;
+}
+
+@media print {
+  .box-container {
+    padding-top: 30.8mm;
+    background-color: #ffffff !important;
+    print-color-adjust: exact;
+    .box-certificates {
+      border-color: #212529;
+      background-color: $color-white !important;
+      print-color-adjust: exact;
+      .box-header {
+        .img-wrap {
+          background-color: #ffffff !important;
+        }
+      }
+    }
+  }
+  .btn-wrapper {
+    display: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}

@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "SCSS와 JS 빌드 자동화",
   "scripts": {
-    "build:css": "sass src/scss/main.scss:/Users/byeongjookim/Library/CloudStorage/CloudMounter-iwinv/hogi-hjc-p4-webroot/hylinctmp202603/resources/front/css/main.min.css --style=compressed",
+    "build:css": "sass src/scss/main.scss:/Users/byeongjookim/Library/CloudStorage/CloudMounter-iwinv/hogi-hjc-p4-webroot/hylinctmp202603/resources/front/css/main.min.css src/scss/cert.scss:/Users/byeongjookim/Library/CloudStorage/CloudMounter-iwinv/hogi-hjc-p4-webroot/hylinctmp202603/resources/front/css/cert.min.css --style=compressed",
     "build:js": "terser src/js/main.js -o /Users/byeongjookim/Library/CloudStorage/CloudMounter-iwinv/hogi-hjc-p4-webroot/hylinctmp202603/resources/front/js/main.min.js -c -m",
     "build": "npm run build:css && npm run build:js",
-    "watch:css": "sass --watch src/scss/main.scss:/Users/byeongjookim/Library/CloudStorage/CloudMounter-iwinv/hogi-hjc-p4-webroot/hylinctmp202603/resources/front/css/main.min.css --style=compressed",
+    "watch:css": "sass --watch src/scss/main.scss:/Users/byeongjookim/Library/CloudStorage/CloudMounter-iwinv/hogi-hjc-p4-webroot/hylinctmp202603/resources/front/css/main.min.css src/scss/cert.scss:/Users/byeongjookim/Library/CloudStorage/CloudMounter-iwinv/hogi-hjc-p4-webroot/hylinctmp202603/resources/front/css/cert.min.css --style=compressed",
     "watch:js": "chokidar 'src/js/**/*.js' -c 'npm run build:js'",
     "watch": "npm run watch:css & npm run watch:js",
     "obfuscate:js": "javascript-obfuscator src/js/main.js --output src/js/main.obf.js",

@@ -1,0 +1,140 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "sass:color";
+
+.apply-edu-rg {
+  max-width: rem(1080);
+  margin: 0 auto;
+  .divide {
+    width: 100%;
+    height: 1px;
+    margin: rem(80) 0;
+    background-color: $color-gray-500;
+  }
+  .btn-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: rem(6);
+    margin-top: rem(80);
+  }
+  .apply-edu-rg-list {
+    .label {
+      min-width: rem(74);
+      display: inline-block;
+      font-weight: 500;
+      font-size: rem(12);
+      padding: rem(12);
+      border-radius: rem(700);
+      border: 2px solid transparent;
+      background-color: transparent;
+      text-align: center;
+      &.label-primary {
+        border-color: $color-primary;
+        color: $color-primary;
+      }
+      &.label-success {
+        border-color: #03c75a;
+        color: #03c75a;
+      }
+      &.label-danger {
+        border-color: $color-danger;
+        color: $color-danger;
+      }
+      &.label-warning {
+        border-color: $color-warning;
+        color: $color-warning;
+      }
+      &.label-default {
+        border-color: #777777;
+        color: #777777;
+      }
+    }
+    &__item {
+      &:first-child {
+        .apply-edu-rg-list__item-link {
+          border-top: 2px solid $color-black;
+        }
+      }
+      &:not(:last-child) {
+        .apply-edu-rg-list__item-link {
+          border-bottom: 1px solid #fbfbfb;
+        }
+      }
+      &:last-child {
+        .apply-edu-rg-list__item-link {
+          border-bottom: 1px solid $color-black;
+        }
+      }
+      &-link {
+        display: flex;
+        align-items: center;
+        padding: rem(20) 0;
+        color: $color-black;
+        &:hover {
+          background-color: #f9f9f9;
+        }
+      }
+      &-date {
+        width: rem(150);
+        font-size: rem(16);
+        line-height: 1;
+        letter-spacing: -0.08em;
+        text-align: center;
+      }
+      &-title {
+        width: calc(100% - rem(250));
+        font-weight: 700;
+        font-size: rem(18);
+        line-height: rem(26);
+        letter-spacing: -0.08em;
+      }
+      &-state {
+        width: rem(100);
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 780px) {
+  .apply-edu-rg {
+    .divide {
+      margin: rem(40) 0;
+    }
+
+    .btn-wrapper {
+      margin-top: rem(40);
+    }
+
+    .apply-edu-rg-list {
+      .label {
+        padding: rem(8) rem(10);
+      }
+      &__item {
+        &-link {
+          display: block;
+          padding: rem(15) rem(10);
+          position: relative;
+        }
+        &-date {
+          width: 50%;
+          padding: rem(8) 0;
+          text-align: left;
+        }
+        &-title {
+          width: 100%;
+          margin-top: rem(16);
+          font-size: rem(16);
+        }
+        &-state {
+          width: 50%;
+          text-align: right;
+          position: absolute;
+          top: rem(15);
+          right: rem(10);
+        }
+      }
+    }
+  }
+}

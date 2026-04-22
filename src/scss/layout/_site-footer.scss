@@ -116,10 +116,12 @@
   color: $color-gray-300;
 }
 
-.btn-top {
-  position: absolute;
-  bottom: rem(75);
-  right: 0;
+.btn {
+  &.btn-top {
+    position: absolute;
+    bottom: rem(75);
+    right: 0;
+  }
 }
 
 /* media quries */

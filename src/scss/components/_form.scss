@@ -126,6 +126,27 @@
     }
     resize: none;
   }
+  select {
+    appearance: unset;
+    width: 100%;
+    height: rem(50);
+    padding: rem(10) rem(33) rem(10) rem(10);
+    border-radius: rem(8);
+    border: rem(1) solid #e8e8e8;
+    background-image: url(../images/select-darr.png);
+    background-size: rem(12);
+    background-repeat: no-repeat;
+    background-position: right rem(13) top 50%;
+    font-family: $font-nanum-gothic;
+    font-size: rem(14);
+    line-height: 1;
+    letter-spacing: -0.08em;
+    &:focus {
+      border-color: $color-primary;
+      outline: none;
+      box-shadow: none;
+    }
+  }
   .input-wrapper {
     & > div {
       &:not(.input-group, .cms-form-address) {

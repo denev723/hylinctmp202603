@@ -1,0 +1,23 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+@use "sass:color";
+
+.my-info {
+  max-width: rem(1080);
+  margin: 0 auto;
+  .btn-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: rem(6);
+    margin-top: rem(80);
+  }
+}
+
+@media (max-width: 780px) {
+  .my-info {
+    .btn-wrapper {
+      margin-top: rem(40);
+    }
+  }
+}

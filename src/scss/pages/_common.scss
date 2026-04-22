@@ -421,6 +421,20 @@
         padding: rem(20) rem(40);
         border-radius: rem(20);
         background-color: $color-gray-50;
+        &:has(.box-list__item-inner) {
+          display: block;
+          .box-list__item-inner {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+              .box-list__text {
+                color: $color-secondary;
+              }
+            }
+          }
+        }
       }
       .box-list__text {
         padding-left: rem(42);
@@ -428,6 +442,7 @@
         font-size: rem(20);
         line-height: lh(32);
         position: relative;
+        transition: color 0.2s ease;
         &::before {
           content: "";
           width: rem(32);
@@ -551,6 +566,14 @@
       color: $color-text-primary;
       em {
         color: $color-secondary;
+      }
+    }
+    &-body {
+      p {
+        font-family: $font-nanum-square;
+        font-size: rem(18);
+        line-height: lh(30);
+        color: $color-black;
       }
     }
   }
@@ -734,16 +757,16 @@
           color: $color-secondary;
         }
         &.top-left {
-          border-top-left-radius: rem(20);
+          border-top-left-radius: rem(999);
         }
         &.top-right {
-          border-top-right-radius: rem(20);
+          border-top-right-radius: rem(999);
         }
         &.bottom-right {
-          border-bottom-right-radius: rem(20);
+          border-bottom-right-radius: rem(999);
         }
         &.bottom-left {
-          border-bottom-left-radius: rem(20);
+          border-bottom-left-radius: rem(999);
         }
       }
     }
@@ -1216,6 +1239,12 @@
         background-size: rem(22);
         font-size: rem(18);
         line-height: lh(22);
+      }
+      &-body {
+        p {
+          font-size: rem(14);
+          line-height: lh(26);
+        }
       }
     }
   }

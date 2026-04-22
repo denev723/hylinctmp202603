@@ -3,6 +3,7 @@
 @use "sass:color";
 
 .btn {
+  position: relative;
   &.btn-user,
   &.btn-login,
   &.btn-logout,
@@ -169,6 +170,30 @@
       }
     }
   }
+  &.btn-default {
+    background-color: $color-gray-100;
+    color: $color-black;
+    transition: all 0.2s ease;
+    &:hover {
+      background-color: $color-gray-200;
+    }
+  }
+  &.btn-warning {
+    background-color: $color-warning;
+    color: $color-white;
+    transition: all 0.2s ease;
+    &:hover {
+      background-color: color.scale($color-warning, $lightness: -10%);
+    }
+  }
+  &.btn-danger {
+    background-color: $color-danger;
+    color: $color-white;
+    transition: all 0.2s ease;
+    &:hover {
+      background-color: color.scale($color-danger, $lightness: -10%);
+    }
+  }
   &.btn-submit {
     display: block;
     padding: rem(12) rem(15);
@@ -183,6 +208,41 @@
       background-color: $color-tab-secondary-hover;
     }
   }
+  &.btn-apply {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0 rem(15);
+    padding: rem(18);
+    border: rem(2) solid $color-primary;
+    &:hover {
+      background-color: $color-primary;
+      color: $color-white;
+      .btn__icon {
+        background-image: url(../images/window-arrow-white.png);
+      }
+      .btn__text {
+        color: $color-white;
+      }
+    }
+    .btn__icon {
+      width: rem(25);
+      height: rem(25);
+      background-image: url(../images/window-arrow-primary.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      transition: background-image 0.2s ease;
+    }
+    .btn__text {
+      font-family: $font-nanum-square;
+      font-size: rem(20);
+      line-height: 1;
+      letter-spacing: -0.08em;
+      color: $color-primary;
+      transition: all 0.2s ease;
+    }
+  }
 }
 
 .btn-round {
@@ -194,6 +254,7 @@
     font-weight: 700;
     font-size: rem(18);
     line-height: 1;
+    text-align: center;
   }
 }
 
@@ -326,6 +387,17 @@
     &.btn-submit {
       padding: rem(13) rem(12);
       font-size: rem(14);
+    }
+    &.btn-apply {
+      gap: 0 rem(10);
+      padding: rem(14);
+      .btn__icon {
+        width: rem(20);
+        height: rem(20);
+      }
+      .btn__text {
+        font-size: rem(16);
+      }
     }
   }
 

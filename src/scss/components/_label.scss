@@ -37,7 +37,9 @@
 }
 
 @media (max-width: 780px) {
-  .label {
-    padding: rem(8) rem(10);
+  .gray-box--info {
+    .label {
+      padding: rem(8) rem(10);
+    }
   }
 }

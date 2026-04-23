@@ -76,6 +76,158 @@ $(document).ready(function () {
 
   gsap.registerPlugin(ScrollTrigger);
 
+  // Main visual swiper (markup: .main-visual__swiper)
+  (function initMainVisualSwiper() {
+    const SwiperCtor = window.Swiper;
+    const el = document.querySelector(".main-visual__swiper");
+    if (!SwiperCtor || !el) return;
+
+    const root = el.closest(".main-visual") || document;
+    const prevEl =
+      root.querySelector(".main-visual__swiper-prev") || root.querySelector(".main-swiper__prev");
+    const nextEl =
+      root.querySelector(".main-visual__swiper-next") || root.querySelector(".main-swiper__next");
+    const pagerEl =
+      root.querySelector(".main-visual__swiper-pager") || root.querySelector(".main-swiper__pager");
+    const toggleEl = root.querySelector(".main-visual__swiper-toggle");
+
+    const slideCount = el.querySelectorAll(".swiper-slide").length;
+    const enableLoop = slideCount > 1;
+
+    const options = {
+      loop: enableLoop,
+      speed: 800,
+      effect: "fade",
+      fadeEffect: { crossFade: true },
+      autoplay: enableLoop
+        ? {
+            delay: 8000,
+            disableOnInteraction: false,
+          }
+        : false,
+      watchOverflow: true,
+    };
+
+    if (prevEl && nextEl) {
+      options.navigation = { prevEl, nextEl };
+    }
+    if (pagerEl) {
+      options.pagination = { el: pagerEl, clickable: true };
+    }
+
+    const swiper = new SwiperCtor(el, options);
+
+    // Slide animation hook (class toggle only)
+    const $content =
+      root.querySelector(".main-visual__content-inner") ||
+      root.querySelector(".main-visual__content");
+
+    const clearFadeUp = () => {
+      if ($content) $content.classList.remove("is-fade-up");
+    };
+
+    const syncScaleToActive = () => {
+      const slides = swiper && swiper.slides ? Array.from(swiper.slides) : [];
+      if (slides.length) {
+        slides.forEach((s) => s.classList.remove("is-scale"));
+      } else {
+        el.querySelectorAll(".swiper-slide").forEach((s) => s.classList.remove("is-scale"));
+      }
+
+      const activeSlide =
+        swiper && swiper.slides && typeof swiper.activeIndex === "number"
+          ? swiper.slides[swiper.activeIndex]
+          : el.querySelector(".swiper-slide-active");
+      if (activeSlide) activeSlide.classList.add("is-scale");
+    };
+
+    const applyAnimClasses = () => {
+      syncScaleToActive();
+      if ($content) $content.classList.add("is-fade-up");
+    };
+
+    // initial (first load)
+    applyAnimClasses();
+
+    // per slide change
+    swiper.on("slideChangeTransitionStart", clearFadeUp);
+    swiper.on("slideChangeTransitionEnd", applyAnimClasses);
+
+    const setToggleState = (isPlaying) => {
+      if (!toggleEl) return;
+      toggleEl.classList.toggle("is-playing", isPlaying);
+      toggleEl.setAttribute("aria-pressed", isPlaying ? "true" : "false");
+      toggleEl.setAttribute("aria-label", isPlaying ? "자동 재생 정지" : "자동 재생 시작");
+    };
+
+    if (toggleEl) {
+      if (!enableLoop || !swiper.autoplay) {
+        toggleEl.disabled = true;
+        toggleEl.classList.remove("is-playing");
+        toggleEl.setAttribute("aria-pressed", "false");
+        toggleEl.setAttribute("aria-label", "자동 재생 사용 불가");
+      } else {
+        setToggleState(!!swiper.autoplay.running);
+        toggleEl.addEventListener("click", (e) => {
+          e.preventDefault();
+          const running = !!swiper.autoplay.running;
+          if (running) swiper.autoplay.stop();
+          else swiper.autoplay.start();
+          setToggleState(!running);
+        });
+      }
+    }
+  })();
+
+  // Main notice swiper: enable only when overflow happens (no breakpoints)
+  (function initMainNoticeSwiper() {
+    const SwiperCtor = window.Swiper;
+    const el = document.querySelector(".main-notice__swiper");
+    if (!SwiperCtor || !el) return;
+
+    let instance = null;
+
+    const needsSwiper = () => {
+      const wrap = el.querySelector(".swiper-wrapper");
+      if (!wrap) return false;
+      // if wrapper content overflows container width, enable swiper
+      return (wrap.scrollWidth || 0) > (el.clientWidth || 0) + 1;
+    };
+
+    const destroyIfAny = () => {
+      if (!instance) return;
+      instance.destroy(true, true);
+      instance = null;
+    };
+
+    const ensure = () => {
+      if (needsSwiper()) {
+        if (instance) return;
+        instance = new SwiperCtor(el, {
+          slidesPerView: "auto",
+          spaceBetween: 0,
+          speed: 600,
+          watchOverflow: true,
+        });
+      } else {
+        destroyIfAny();
+      }
+    };
+
+    let raf = 0;
+    const scheduleEnsure = () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        ensure();
+      });
+    };
+
+    // initial + resize
+    scheduleEnsure();
+    $(window).on("resize.mainNoticeSwiper", scheduleEnsure);
+  })();
+
   let lastScroll = 0;
   let wheelDirection = null;
   const SITE_HEADER_TOP_SHOW_Y = 3;
@@ -89,6 +241,11 @@ $(document).ready(function () {
 
   $(window).on("scroll", function () {
     const currentScroll = $(this).scrollTop();
+    if (currentScroll === 0) {
+      $("body").removeClass("is-site-header-show is-site-header-hide");
+      lastScroll = 0;
+      return;
+    }
     const diff = currentScroll - lastScroll;
     if (Math.abs(diff) < SITE_HEADER_DELTA) return;
     wheelDirection = diff > 0 ? "down" : "up";
@@ -98,6 +255,10 @@ $(document).ready(function () {
 
   function handleScrollBehavior(direction) {
     const scrollTop = $(window).scrollTop();
+    if (scrollTop === 0) {
+      $("body").removeClass("is-site-header-show is-site-header-hide");
+      return;
+    }
     if (scrollTop <= SITE_HEADER_TOP_SHOW_Y) {
       $("body").removeClass("is-site-header-hide").addClass("is-site-header-show");
       return;
@@ -243,6 +404,21 @@ $(document).ready(function () {
       $(".family-site").removeClass("is-active");
     }
   });
+
+  // 상단으로 이동 (마크업: href="javascript:onTheTop()")
+  window.onTheTop = function (duration) {
+    const ms = typeof duration === "number" ? duration : 400;
+    $("html, body").stop(true).animate({ scrollTop: 0 }, ms);
+  };
+
+  // 배너 열기/닫기 (마크업: href="javascript:bannerToggle()")
+  window.bannerToggle = function () {
+    const $wrap = $(".fixed-btns");
+    const $banner = $wrap.length ? $wrap.find(".banner") : $(".banner");
+    const $btn = $wrap.length ? $wrap.find(".btn-banner") : $(".btn-banner");
+    $banner.toggleClass("active");
+    $btn.toggleClass("active");
+  };
 
   // LNB logic should only run when LNB is actually visible/usable.
   (function initLnbController() {

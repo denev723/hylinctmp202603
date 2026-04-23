@@ -7,7 +7,10 @@
 
 html {
   &::before {
-    content: url(../images/hamburger-orange.png) url(../images/board/default/notice-rarr-b.png);
+    content: url(../images/hamburger-orange.png) url(../images/board/default/notice-rarr-b.png)
+      url(../images/mainpage/more-plus-orange.png) url(../images/mainpage/plus-w.png)
+      url(../images/mainpage/swiper-prev-orange.png) url(../images/mainpage/swiper-next-orange.png)
+      url(../images/mainpage/swiper-pause-orange.png) url(../images/mainpage/swiper-play-orange.png);
     position: absolute;
     width: 0;
     height: 0;

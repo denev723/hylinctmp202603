@@ -2,6 +2,57 @@
 @use "../abstracts/mixins" as *;
 @use "sass:color";
 
+body.layout-main {
+  .btn {
+    &.btn-user {
+      .btn__icon {
+        fill: $color-white;
+      }
+    }
+    &.btn-menu {
+      .btn__icon {
+        background-image: url(../images/hamburger-white.png);
+      }
+    }
+    &.btn-login {
+      .btn__icon {
+        fill: $color-white;
+      }
+    }
+    &.btn-logout {
+      .btn__icon {
+        fill: $color-white;
+      }
+    }
+  }
+}
+
+body.layout-main.is-site-header-show,
+body.layout-main.is-lnb-open {
+  .btn {
+    &.btn-user {
+      .btn__icon {
+        fill: $color-primary;
+      }
+    }
+    &.btn-login {
+      .btn__icon {
+        fill: $color-primary;
+      }
+    }
+    &.btn-logout {
+      .btn__icon {
+        fill: $color-secondary;
+      }
+    }
+    &.btn-menu {
+      .btn__icon {
+        background-image: url(../images/hamburger.png);
+      }
+    }
+  }
+}
+
 .btn {
   display: inline-block;
   position: relative;

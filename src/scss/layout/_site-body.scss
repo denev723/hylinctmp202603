@@ -32,6 +32,11 @@ body.page-tab-fixed {
           margin-bottom: rem(60);
         }
       }
+      &:has(:not(.page-title)) {
+        .page-title--xl {
+          margin-bottom: rem(75);
+        }
+      }
     }
   }
 }
@@ -157,6 +162,13 @@ body.page-tab-fixed {
   }
 }
 
+.conts-wrap {
+  & > .alert {
+    max-width: rem(1020);
+    margin: 0 auto;
+  }
+}
+
 /* media quries */
 @media (max-width: 780px) {
   body.is-site-header-show.page-tab-fixed {
@@ -173,6 +185,11 @@ body.page-tab-fixed {
         &:has(.page-tab-wrap) {
           .page-title--xl {
             margin-bottom: rem(40);
+          }
+        }
+        &:has(:not(.page-title)) {
+          .page-title--xl {
+            margin-bottom: rem(50);
           }
         }
       }
